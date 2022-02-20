@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
-import SimpleStorageContract from "../contracts/SimpleStorage.json";
+import electionContract from "../contracts/Election.json";
 import getWeb3 from "../getWeb3";
 
 const Home = () => {
-  const [StorageValue, setStorageValue] = useState(0);
-  const [Web3Server, setWeb3Server] = useState({});
-  const [accounts, setAccounts] = useState([]);
-  const [Contract, setContract] = useState({});
+  const [web3, setWeb3] = useState({});
+  const [accounts, setAccounts] = useState("");
+  const [contract, setContract] = useState({});
+  const [candidateNumber, setCandidateNumber] = useState(0);
+  const [name, setName] = useState("");
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -22,18 +23,18 @@ const Home = () => {
         // Get the contract instance.
         const networkId = await web3.eth.net.getId();
   
-        const deployedNetwork = SimpleStorageContract.networks[networkId];
+        const deployedNetwork = electionContract.networks[networkId];
 
-        const instance = new web3.eth.Contract(
-          SimpleStorageContract.abi,
+        const electionInstance = new web3.eth.Contract(
+          electionContract.abi,
           deployedNetwork && deployedNetwork.address,
         );
   
         // Set web3, accounts, and contract to the state, and then proceed with an
         // example of interacting with the contract's methods.
-        setWeb3Server(web3);
-        setAccounts(accounts);
-        setContract(instance);
+        setWeb3(web3);
+        setAccounts(accounts[0]);
+        setContract(electionInstance);
         setLoading(false);
       } catch (error) {
         // Catch any errors for any of the above operations.
@@ -45,52 +46,45 @@ const Home = () => {
     }
 
     fetchData();
-  }, [])
-
-  useEffect(() => {
-    const runExample = async () => {
-      // Stores a given value, 5 by default.
-      await Contract.methods.set(5).send({ from: accounts[0] });
+  }, []);
   
-      // Get the value from the contract to prove it worked.
-      const response = await Contract.methods.get().call();
-  
-      // Update state with the result.
-      setStorageValue(response);
-    };
+  const addCandidate = async (e) => {
+    await contract.methods
+      .addCandidate(name)
+      .send({ from: accounts, gas: 5000000 });
+    setName('');
+  };
 
-    runExample();
-  }, [accounts, Contract])
+  const onNameChange = (e) => {
+    setName(e.target.value);
+  };
 
-  if (!Web3Server) {
-      return (
-        <>
-          {loading ? (
-            <div>Loading...</div>
-          ) : (
-            <div>Loading Web3, accounts, and contract...</div>
-          )}
-        </>
-      );
+  if (!web3) {
+    return (
+      <>
+        {loading ? (
+          <div>Loading...</div>
+        ) : (
+          <div>Loading Web3, accounts, and contract...</div>
+        )}
+      </>
+    );
   } else {
     return (
       <>
         {loading ? (
           <div>Loading...</div>
         ) : (
-          <div className="App">
-            <h1>Good to Go!</h1>
-            <p>Your Truffle Box is installed and ready.</p>
-            <h2>Smart Contract Example</h2>
-            <p>
-              If your contracts compiled and migrated successfully, below will show
-              a stored value of 5 (by default).
-            </p>
-            <p>
-              Try changing the value stored on <strong>line 42</strong> of App.js.
-            </p>
-            <div>The stored value is: {StorageValue}</div>
-          </div>
+          <>
+            {candidateNumber}
+            <input
+              autoFocus
+              value={name}
+              onChange={onNameChange}
+              placeholder={"이름을 입력해주세요."}
+            />
+            <button onClick={addCandidate}>Add</button>
+          </>
         )}
       </>
     );
