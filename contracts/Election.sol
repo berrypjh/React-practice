@@ -2,20 +2,20 @@
 pragma solidity >=0.4.21 <0.8.0;
 
 contract Election {
-  address public admin;
+  // address public admin;
   uint256 candidateCount;
   uint256 voterCount;
 
   constructor() public {
-    admin = msg.sender;
+    // admin = msg.sender;
     candidateCount = 0;
     voterCount = 0;
   }
 
-  modifier onlyAdmin() {
-    require(msg.sender == admin);
-    _;
-  }
+  // modifier onlyAdmin() {
+  //   require(msg.sender == admin);
+  //   _;
+  // }
 
   struct Candidate {
     uint256 candidateId;
@@ -25,7 +25,7 @@ contract Election {
 
   mapping(uint256 => Candidate) public candidateDetails;
 
-  function addCandidate(string memory _name) public onlyAdmin {
+  function addCandidate(string memory _name) public {
     Candidate memory newCandidate =
       Candidate({
           candidateId: candidateCount,
