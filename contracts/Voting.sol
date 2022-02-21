@@ -2,7 +2,7 @@
 pragma solidity >=0.4.21 <0.9.0;
 
 // CHS
-contract Ballot{
+contract Voting{
     // uint256 candidateCount
     uint256 candidateCount;
 
@@ -25,6 +25,7 @@ contract Ballot{
         uint256 candidateId;
         string name;
         uint256 voteCount;
+        bool hasCandidate;
     }
 
     // enum State { Created, Voting, Ended }
@@ -49,10 +50,10 @@ contract Ballot{
     }
 
     // modifier inState()
-    // modifier inState(State _state){
-    //     require(state == _state);
-    //     _;
-    // }
+    modifier inState(State _state){
+        require(state == _state);
+        _;
+    }
 
     /* FUNCTIONS */
 
@@ -71,13 +72,15 @@ contract Ballot{
     }
 
     // addCandidate()
-    function addCandidate(string memory _name) public {
+    function addCandidate(string memory _name) public onlyCandidater {
+        require(candidateCount < 5);
         Candidate memory newCandidate =
-        Candidate({
-            candidateId: candidateCount,
-            name: _name,
-            voteCount: 0
-        });
+            Candidate({
+                candidateId: candidateCount,
+                name: _name,
+                hasCandidate: true,
+                voteCount: 0
+            });
         candidateDetails[candidateCount] = newCandidate;
         candidateCount += 1;
     }

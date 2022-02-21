@@ -40,7 +40,6 @@ const AddCandidate = (props) => {
 
     const addCandidateHandler = async (e) => {
         e.preventDefault();
-        console.log(contract)
         await contract.methods
             .addCandidate(name)
             .send({ from: accounts, gas: 5000000 });

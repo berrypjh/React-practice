@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
 
-import electionContract from "./contracts/Election.json";
+import electionContract from "./contracts/Voting.json";
 import getWeb3 from "./getWeb3";
 import MainLayout from "./layout";
 import Home from "./component/Home";
