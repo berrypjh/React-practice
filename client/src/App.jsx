@@ -7,7 +7,7 @@ import getWeb3 from "./getWeb3";
 import MainLayout from "./layout";
 import Home from "./component/Home";
 import AddCandidate from "./component/addcandidate/AddCandidate";
-import Voting from "./component/Voting";
+import Voting from "./component/voting";
 import Results from "./component/Results";
 
 const App = () => {

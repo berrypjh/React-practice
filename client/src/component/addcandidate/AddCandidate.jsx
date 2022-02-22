@@ -1,7 +1,7 @@
-import { Alert, Snackbar, TextField } from "@mui/material";
+import { TextField } from "@mui/material";
 import React, { useState } from "react";
 import { useEffect } from "react";
-import { Button } from "react-bootstrap";
+import { Button } from "@mui/material";
 import StatusCandidate from "./sections/StatusCandidate";
 import TotalRegisters from "./sections/TotalCandidate";
 
@@ -12,17 +12,18 @@ const AddCandidate = (props) => {
     const [candidateNumber, setCandidateNumber] = useState(0);
     const [name, setName] = useState("");
 
+    const fetch = async () => {
+        const candidateNumber = await contract.methods
+            .getCandidateNumber()
+            .call();
+        setCandidateNumber(candidateNumber);
+    };
+
     useEffect(() => {
         if (Object.keys(contract).length == 0) return;
 
         try {
-            const totalNumber = async () => {
-                const candidateNumber = await contract.methods
-                    .getCandidateNumber()
-                    .call();
-                setCandidateNumber(candidateNumber);
-            };
-            totalNumber();
+            fetch();
         } catch (error) {
             alert(
                 `Failed.`
@@ -31,17 +32,11 @@ const AddCandidate = (props) => {
         }
     }, [contract]);
 
-    const fetch = async () => {
-        const candidateNumber = await contract.methods
-            .getCandidateNumber()
-            .call();
-        setCandidateNumber(candidateNumber);
-    };
-
     const addCandidateHandler = async (e) => {
+        console.log(contract)
         e.preventDefault();
         await contract.methods
-            .addCandidate(name)
+            .addCandidate(name, slogan)
             .send({ from: accounts, gas: 5000000 });
         setName("");
         fetch();
@@ -51,13 +46,16 @@ const AddCandidate = (props) => {
         setName(e.target.value);
     };
 
+    const onSloganChange = (e) => {
+        setSlogan(e.target.value);
+    };
+
     const buttons = (
         <>
           <Button
             type="submit"
             color="secondary"
             variant="contained"
-            className="sendbutton"
           >
            submit
           </Button>
@@ -87,14 +85,14 @@ const AddCandidate = (props) => {
                                 />
                             </div>
                             <div className="addCandidate_adding_slogan">
-                                {/* slogan
+                                slogan
                                 <TextField
                                     required
                                     label="slogan"
                                     variant="standard"
                                     name="slogan"
-                                    onChange={onNameChange}
-                                /> */}
+                                    onChange={onSloganChange}
+                                />
                             </div>
                             {buttons}
                         </div>
