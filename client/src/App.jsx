@@ -8,7 +8,7 @@ import MainLayout from "./layout";
 import Home from "./component/Home";
 import AddCandidate from "./component/addcandidate/AddCandidate";
 import Voting from "./component/voting";
-import Results from "./component/Results";
+import Results from "./component/results";
 
 const App = () => {
     const [web3, setWeb3] = useState({});

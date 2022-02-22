@@ -33,7 +33,6 @@ const AddCandidate = (props) => {
     }, [contract]);
 
     const addCandidateHandler = async (e) => {
-        console.log(contract)
         e.preventDefault();
         await contract.methods
             .addCandidate(name, slogan)
