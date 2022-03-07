@@ -6,9 +6,6 @@ import electionContract from "./contracts/Voting.json";
 import getWeb3 from "./getWeb3";
 import MainLayout from "./layout";
 import Home from "./component/Home";
-import AddCandidate from "./component/addcandidate/AddCandidate";
-import Voting from "./component/voting";
-import Results from "./component/results";
 
 const App = () => {
     const [web3, setWeb3] = useState({});
@@ -65,10 +62,7 @@ const App = () => {
         <BrowserRouter>
             <Routes>
                 <Route path="/*" element={<MainLayout />}>
-                    <Route path="" element={<Home />} />
-                    <Route path="addcandidate" element={<AddCandidate web3Data={web3Data}/>} />
-                    <Route path="voting" element={<Voting web3Data={web3Data}/>} />
-                    <Route path="results" element={<Results web3Data={web3Data}/>} />
+                    <Route path="" element={<Home web3Data={web3Data} />} />
                     <Route path="*" element={<NotFound />} />
                 </Route>
             </Routes>
