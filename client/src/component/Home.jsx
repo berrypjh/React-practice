@@ -2,6 +2,9 @@ import { TextField } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import electionContract from "../contracts/Election.json";
 import getWeb3 from "../getWeb3";
+import { createAvatar } from '@dicebear/avatars';
+import * as style from '@dicebear/avatars-identicon-sprites';
+
 
 const Home = () => {
     const [web3, setWeb3] = useState({});
@@ -10,12 +13,12 @@ const Home = () => {
     const [candidateNumber, setCandidateNumber] = useState(0);
     const [name, setName] = useState("");
     const [loading, setLoading] = useState(false);
-
-  const fetchData = async () => {
-    setLoading(true);
-    try {
-      // Get network provider and web3 instance.
-      const web3 = await getWeb3();
+    
+    const fetchData = async () => {
+        setLoading(true);
+        try {
+            // Get network provider and web3 instance.
+            const web3 = await getWeb3();
 
             // Use web3 to get the user's accounts.
             const accounts = await web3.eth.getAccounts();
@@ -29,7 +32,7 @@ const Home = () => {
                 electionContract.abi,
                 deployedNetwork && deployedNetwork.address
             );
-
+            
             // Set web3, accounts, and contract to the state, and then proceed with an
             // example of interacting with the contract's methods.
             setWeb3(web3);

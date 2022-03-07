@@ -79,6 +79,12 @@ const Voting = (props) => {
                                 <div>
                                     이름 = {candidate.name}
                                 </div>
+                                <img
+                                    className="mb-4"
+                                    src={`https://avatars.dicebear.com/api/avataaars/${candidate.name}.svg`}
+                                    alt=""
+                                    width="72"
+                                />
                                 <div>
                                     슬로건 = {candidate.slogan}
                                 </div>

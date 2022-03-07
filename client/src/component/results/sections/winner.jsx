@@ -25,7 +25,7 @@ const Winner = (props) => {
   
   return (
     <>
-      {!voteWinner ? (
+      {Object.keys(voteWinner).length == 0 ? (
         <div>아직 우승자 없음...</div>
       ) : (
         <>
@@ -38,6 +38,12 @@ const Winner = (props) => {
           <div>
               이름 = {voteWinner.name}
           </div>
+          <img
+              className="mb-4"
+              src={`https://avatars.dicebear.com/api/avataaars/${voteWinner.name}.svg`}
+              alt=""
+              width="72"
+          />
           <div>
               슬로건 = {voteWinner.slogan}
           </div>
