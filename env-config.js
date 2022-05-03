@@ -1,6 +1,6 @@
-const debug = process.env.NODE_ENV !== "production";
-const name = "small-magic-project-deployment";
+const prod = process.env.NODE_ENV === "production";
+const name = "test";
 
 module.exports = {
-  "process.env.BACKEND_URL": !debug ? `/${name}` : "",
+  "process.env.BACKEND_URL": prod ? `/${name}` : "",
 };
