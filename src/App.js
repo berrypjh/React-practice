@@ -1,12 +1,11 @@
+import logo from './logo.svg';
 import './App.css';
-import { Route, Routes } from "react-router-dom";
-import MainComponents from './views/MainComponents';
 
 function App() {
   return (
-    <Routes>
-      <Route path="" element={<MainComponents />} />
-    </Routes>
+    <div className="App">
+      얀녕하세요!
+    </div>
   );
 }
 
